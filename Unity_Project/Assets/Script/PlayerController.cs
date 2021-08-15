@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
             {
                 isWalk = false;
             }
-            Stick.anim.SetBool("Walk", isWalk);
+            //Stick.anim.SetBool("Walk", isWalk);
 
             lastPos = transform.position;
         }
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
             isRun = false;
             currentSpeed = walkSpeed;
         }
-        Stick.anim.SetBool("Run", isRun);
+        //Stick.anim.SetBool("Run", isRun);
     }
 
     //มกวม

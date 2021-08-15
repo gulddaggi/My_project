@@ -58,7 +58,7 @@ public class StickController : MonoBehaviour
     IEnumerator AttackCoroutine()
     {
         isAttack = true;
-        this.anim.SetTrigger("Attack");
+        anim.SetTrigger("Attack");
 
         yield return new WaitForSeconds(attackOnDelay);
         isSwing = true;
