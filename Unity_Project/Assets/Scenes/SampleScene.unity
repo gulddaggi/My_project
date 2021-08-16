@@ -5365,6 +5365,147 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!1 &1044269283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 788191429240336647, guid: d7f7ceb4b20c5ee4e80d48fc78e950ae, type: 3}
+  m_PrefabInstance: {fileID: 2024608521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1044269284 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 788191429233066699, guid: d7f7ceb4b20c5ee4e80d48fc78e950ae, type: 3}
+  m_PrefabInstance: {fileID: 2024608521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1044269285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044269283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7070509b78a956c49b370668b08d8318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAim: 0
+  fire_Sound: {fileID: 8300000, guid: 92d35fe1c59bbd14eaee9e3d3b54cea7, type: 3}
+  charge_Alert: {fileID: 8300000, guid: 7b59962ab2dbf3e4997f14eb064d5140, type: 3}
+  chargeGauge: 0
+--- !u!114 &1044269286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044269283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1c5712eb8c1f34c83213a751f3886f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunName: EntGun
+  range: 70
+  accuracy: 0.04
+  fireRate: 0.6
+  damage: 0
+  anim: {fileID: 1044269284}
+  muzzleFlash: {fileID: 0}
+--- !u!82 &1044269287
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044269283}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1223120465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5427,25 +5568,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1df1a2b6997a354582e82ed29da501f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunName: handGun
-  range: 100
-  accuracy: 0
-  fireRate: 0.5
+  fire_Sound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
   reloadTime: 2
-  damage: 7
   reloadBullet: 7
-  remainBullet: 30
+  remainBullet: 7
   maximumBullet: 60
   carryBullet: 30
-  retroActionForce: 0
-  retroActionFineSightForce: 0
-  AimOriginPos: {x: 0, y: 0, z: 0}
-  originPos: {x: 0, y: 0, z: 0}
-  anim: {fileID: 1415202455}
-  muzzleFlash: {fileID: 378028568}
-  fire_Sound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
   dontReload_Sound: {fileID: 8300000, guid: 39a52c8570aa5ee4b8c76570a3eda151, type: 3}
   Reload_Sound: {fileID: 8300000, guid: b0d51244fd32fc647960320540b32f66, type: 3}
+  AimOriginPos: {x: -0.26, y: -0.06, z: 0.02}
+  originPos: {x: 0.05, y: -0.513, z: 0.382}
+  isAim: 0
 --- !u!95 &1415202455 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5773617371592629550, guid: e800a8287f013b645862035bd87528e7, type: 3}
@@ -5547,6 +5680,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1415202457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415202453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1c5712eb8c1f34c83213a751f3886f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunName: HandGun
+  range: 100
+  accuracy: 0.04
+  fireRate: 0.5
+  damage: 7
+  anim: {fileID: 1415202455}
+  muzzleFlash: {fileID: 378028568}
 --- !u!1 &1807181824 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5454240311418030207, guid: 3d4668a7aedb5904f9d2c9fa0deb6295, type: 3}
@@ -5590,13 +5742,17 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 788191429233066699, guid: d7f7ceb4b20c5ee4e80d48fc78e950ae, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: fafe5a88797feeb47b3f29826075d897, type: 2}
     - target: {fileID: 788191429240336647, guid: d7f7ceb4b20c5ee4e80d48fc78e950ae, type: 3}
       propertyPath: m_Name
       value: arms_Ent_Gun
       objectReference: {fileID: 0}
     - target: {fileID: 788191429240336647, guid: d7f7ceb4b20c5ee4e80d48fc78e950ae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 788191429240761639, guid: d7f7ceb4b20c5ee4e80d48fc78e950ae, type: 3}
       propertyPath: m_RootOrder
@@ -5725,7 +5881,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773617371585244898, guid: e800a8287f013b645862035bd87528e7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773617371588355050, guid: e800a8287f013b645862035bd87528e7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773617371588355054, guid: e800a8287f013b645862035bd87528e7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5773617371592629550, guid: e800a8287f013b645862035bd87528e7, type: 3}
       propertyPath: m_Controller
