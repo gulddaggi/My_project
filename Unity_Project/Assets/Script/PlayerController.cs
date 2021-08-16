@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
 
     private StickController Stick;
+    private GunController Gun;
+    private EntGunController EntGun;
 
     //¿Ãµø
     [SerializeField]
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour
         playerRigid = GetComponent<Rigidbody>();
         currentSpeed = walkSpeed;
         Stick = FindObjectOfType<StickController>();
+        Gun = FindObjectOfType<GunController>();
+        EntGun = FindObjectOfType<EntGunController>();
     }
 
 
@@ -130,6 +134,8 @@ public class PlayerController : MonoBehaviour
         {
             isRun = true;
             currentSpeed = runSpeed;
+            //Gun.CancleAim();
+            EntGun.CancleAim();
 
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
