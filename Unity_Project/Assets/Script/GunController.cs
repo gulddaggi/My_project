@@ -5,22 +5,10 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     [SerializeField]
-    private string gunName; //이름
-
-    [SerializeField]
-    private float range; //사정거리
-
-    [SerializeField]
-    private float accuracy; //정확도
-
-    [SerializeField]
-    private float fireRate; //연사속도
+    private AudioClip fire_Sound; //발사음
 
     [SerializeField]
     private float reloadTime; //재장전 속도
-
-    [SerializeField]
-    private int damage; //데미지
 
     [SerializeField]
     private int reloadBullet; //재장전 총알 개수
@@ -35,10 +23,10 @@ public class GunController : MonoBehaviour
     private int carryBullet; //현재 소유중인 총알 개수(장전가능)
 
     [SerializeField]
-    private float retroActionForce; //반동
+    private AudioClip dontReload_Sound; //재장전 불가음
 
     [SerializeField]
-    private float retroActionFineSightForce; //정조준시 반동
+    private AudioClip Reload_Sound; //재장전음
 
     [SerializeField]
     private Vector3 AimOriginPos; //정조준시 위치
@@ -46,39 +34,29 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private Vector3 originPos; //기존 위치
 
-    [SerializeField]
-    private Animator anim; //애니메이션
-
-    [SerializeField]
-    private ParticleSystem muzzleFlash; //총구섬광
-
-    [SerializeField]
-    private AudioClip fire_Sound; //발사음
-
-    [SerializeField]
-    private AudioClip dontReload_Sound; //재장전 불가음
-
-    [SerializeField]
-    private AudioClip Reload_Sound; //재장전음
-
     private float fireRateValue; //계산할 발사속도 값
 
     private AudioSource audioSource;
 
     private bool isReload = false;
 
-    private bool isAim = false;
+    public bool isAim = false;
+
+    private Gun gun;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        transform.localPosition = originPos;
+        gun = GetComponent<Gun>();
     }
 
     void Update()
     {
         FireRateCalc();
         BeforeFire();
-        //BeforeReload();
+        BeforeReload();
+        BeforeAim();
     }
 
     //발사 속도 제어
@@ -87,13 +65,17 @@ public class GunController : MonoBehaviour
         if (fireRateValue > 0)
         {
             fireRateValue -= Time.deltaTime;
+            if (fireRateValue < 0)
+            {
+                fireRateValue = 0;
+            }
         }
     }
 
     //발사 조건
     private void BeforeFire()
     {
-        if (Input.GetButton("Fire1") && fireRateValue <= 0 && !isReload)
+        if (Input.GetButton("Fire1") && fireRateValue == 0 && !isReload)
         {
             Fire();
         }
@@ -111,7 +93,7 @@ public class GunController : MonoBehaviour
             }
             else
             {
-                //CancleAim();
+                CancleAim();
                 StartCoroutine(ReloadCoroutine());
             }
         }
@@ -120,13 +102,20 @@ public class GunController : MonoBehaviour
     //발사
     private void Fire_On()
     {
+        if (isAim)
+        {
+            gun.anim.SetTrigger("Aim_Fire");
+        }
+        else
+        {
+            gun.anim.SetTrigger("Fire");
+
+        }
         remainBullet--;
         GunSound(fire_Sound);
-        fireRateValue = fireRate;
-        muzzleFlash.Play();
-        anim.SetTrigger("Fire");
+        fireRateValue = gun.fireRate;
+        gun.muzzleFlash.Play();
         StopAllCoroutines();
-        //StartCoroutine(RetroActionCoroutine());
     }
 
     //효과음
@@ -134,6 +123,17 @@ public class GunController : MonoBehaviour
     {
         audioSource.clip = _clip;
         audioSource.Play();
+    }
+
+    //재장전 조건
+    private void BeforeReload()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && remainBullet < reloadBullet)
+        {
+            CancleAim();
+            StopAllCoroutines();
+            StartCoroutine(ReloadCoroutine());
+        }
     }
 
 
@@ -144,9 +144,9 @@ public class GunController : MonoBehaviour
         {
             isReload = true;
 
-            carryBullet += reloadBullet;
+            carryBullet += remainBullet;
 
-            anim.SetTrigger("Reload");
+            gun.anim.SetTrigger("Reload");
             GunSound(Reload_Sound);
             yield return new WaitForSeconds(reloadTime);
 
@@ -170,4 +170,57 @@ public class GunController : MonoBehaviour
             Debug.Log("총알 없음");
         }
     }
+
+    //정조준 조건
+    private void BeforeAim()
+    {
+        if (Input.GetButtonDown("Fire2") && !isReload)
+        {
+            Aim();
+        }
+    }
+
+    private void Aim()
+    {
+        isAim = !isAim;
+        gun.anim.SetBool("Aim", isAim);
+
+        if (isAim)
+        {
+            StartCoroutine(AimOnCoroutine());
+        }
+        else
+        {
+            StartCoroutine(AimOffCoroutine());
+        }
+    }
+
+    public void CancleAim()
+    {
+        if (isAim)
+        {
+            Aim();
+        }
+    }
+
+    IEnumerator AimOnCoroutine()
+    {
+        while (transform.localPosition != AimOriginPos)
+        {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, AimOriginPos, 0.2f);
+            yield return null;
+        }
+
+    }
+    IEnumerator AimOffCoroutine()
+    {
+        while (transform.localPosition != originPos)
+        {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, originPos, 0.2f);
+            yield return null;
+        }
+    }
+
+
+
 }
