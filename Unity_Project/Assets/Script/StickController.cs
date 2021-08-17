@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class StickController : MonoBehaviour
 {
+    //이름
+    [SerializeField]
+    private string Stickname;
+
     //공격범위
     [SerializeField]
     private float range;
@@ -36,10 +40,21 @@ public class StickController : MonoBehaviour
     //애니메이션
     public Animator anim;
 
+    public static bool isStickActivated;
+
+    private Crosshair crosshair;
+
+    void Start()
+    {
+        crosshair = FindObjectOfType<Crosshair>();
+    }
 
     void Update()
     {
-        Attack();
+        if (isStickActivated)
+        {
+            Attack();
+        }
     }
 
     //공격 시작
@@ -50,6 +65,7 @@ public class StickController : MonoBehaviour
             if (!isAttack)
             {
                 StartCoroutine(AttackCoroutine());
+                crosshair.FireAnimation();
             }
         }
     }
@@ -100,6 +116,24 @@ public class StickController : MonoBehaviour
             return false;
         }
 
-    }    
+    }
+
+    //무기교체
+    public void StickChange()
+    {
+        //교체되는 무기 비활성화
+        if (WeaponManager.currentWeaponTr != null)
+        {
+            WeaponManager.currentWeaponTr.gameObject.SetActive(false);
+        }
+
+        //교체할 무기의 정보 받기
+        WeaponManager.currentWeaponTr = GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = GetComponent<Animator>();
+
+        //교체할 무기 활성화
+        gameObject.SetActive(true);
+        isStickActivated = true;
+    }
 
 }

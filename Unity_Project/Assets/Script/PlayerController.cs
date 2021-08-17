@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
 {
 
     private StickController Stick;
-    private GunController Gun;
+    private GunController Gunc;
     private EntGunController EntGun;
+    private Gun Gun;
 
     //이동
     [SerializeField]
@@ -44,14 +45,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
+    private Crosshair crosshair;
+
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
         playerRigid = GetComponent<Rigidbody>();
         currentSpeed = walkSpeed;
         Stick = FindObjectOfType<StickController>();
-        Gun = FindObjectOfType<GunController>();
+        Gunc = FindObjectOfType<GunController>();
         EntGun = FindObjectOfType<EntGunController>();
+        crosshair = FindObjectOfType<Crosshair>();
+        Gun = FindObjectOfType<Gun>();
     }
 
 
@@ -92,14 +97,40 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Distance(lastPos, transform.position) >= 0.01f)
             {
                 isWalk = true;
+
+                if (EntGunController.isEntGunActivated)
+                {
+                    WeaponManager.currentWeaponAnim.SetBool("Walk", isWalk);
+                }
+                else if (GunController.isGuncActivated)
+                {
+                    WeaponManager.currentWeaponAnim.SetBool("Walk", isWalk);
+                }
+                else if (StickController.isStickActivated)
+                {
+                    WeaponManager.currentWeaponAnim.SetBool("Walk", isWalk);
+                }
             }
             else if (Vector3.Distance(lastPos, transform.position) < 0.01f)
             {
                 isWalk = false;
-            }
-            //Stick.anim.SetBool("Walk", isWalk);
 
+                if (EntGunController.isEntGunActivated)
+                {
+                    WeaponManager.currentWeaponAnim.SetBool("Walk", isWalk);
+                }
+                else if (GunController.isGuncActivated)
+                {
+                    WeaponManager.currentWeaponAnim.SetBool("Walk", isWalk);
+                }
+                else if (StickController.isStickActivated)
+                {
+                    WeaponManager.currentWeaponAnim.SetBool("Walk", isWalk);
+                }
+            }
+            crosshair.WalkAnimation(isWalk);
             lastPos = transform.position;
+            
         }
     }
 
@@ -134,16 +165,44 @@ public class PlayerController : MonoBehaviour
         {
             isRun = true;
             currentSpeed = runSpeed;
-            //Gun.CancleAim();
-            EntGun.CancleAim();
+
+            if (EntGunController.isEntGunActivated)
+            {
+                WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
+            }
+            else if (GunController.isGuncActivated)
+            {
+                WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
+            }
+            else if (StickController.isStickActivated)
+            {
+                WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
+            }
 
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (!Input.GetKey(KeyCode.LeftShift))
         {
             isRun = false;
+
             currentSpeed = walkSpeed;
+
+            if (EntGunController.isEntGunActivated)
+            {
+                WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
+            }
+            else if (GunController.isGuncActivated)
+            {
+                WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
+            }
+            else if (StickController.isStickActivated)
+            {
+                WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
+            }
+
         }
-        //Stick.anim.SetBool("Run", isRun);
+        isRun = false;
+
+        crosshair.RunAnimation(isRun);
     }
 
     //점프

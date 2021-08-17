@@ -42,21 +42,42 @@ public class GunController : MonoBehaviour
 
     public bool isAim = false;
 
+    // 현재 장착된 무기
     private Gun gun;
+
+    private Crosshair crosshair;
+
+    private RaycastHit hitInfo;
+
+    [SerializeField]
+    private Camera cam;
+
+    [SerializeField]
+    private ParticleSystem hit_effect;
+
+    [SerializeField]
+    private GameObject hit_effec;
+
+    public static bool isGuncActivated; //활성화여부
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         transform.localPosition = originPos;
-        gun = GetComponent<Gun>();
+        gun = FindObjectOfType<Gun>();
+        crosshair = FindObjectOfType<Crosshair>();
     }
 
     void Update()
     {
-        FireRateCalc();
-        BeforeFire();
-        BeforeReload();
-        BeforeAim();
+        if (isGuncActivated)
+        {
+            FireRateCalc();
+            BeforeFire();
+            BeforeReload();
+            BeforeAim();
+        }
+        
     }
 
     //발사 속도 제어
@@ -111,11 +132,23 @@ public class GunController : MonoBehaviour
             gun.anim.SetTrigger("Fire");
 
         }
+        Hit();
+        crosshair.FireAnimation();
         remainBullet--;
         GunSound(fire_Sound);
         fireRateValue = gun.fireRate;
         gun.muzzleFlash.Play();
         StopAllCoroutines();
+    }
+
+    public void Run(bool _bool)
+    {
+        gun.anim.SetBool("Run", _bool);
+    }
+
+    public void Walk(bool _bool)
+    {
+        gun.anim.SetBool("Walk", _bool);
     }
 
     //효과음
@@ -180,21 +213,17 @@ public class GunController : MonoBehaviour
         }
     }
 
+    //조준
     private void Aim()
     {
         isAim = !isAim;
         gun.anim.SetBool("Aim", isAim);
+        crosshair.AimAnimation(isAim);
 
-        if (isAim)
-        {
-            StartCoroutine(AimOnCoroutine());
-        }
-        else
-        {
-            StartCoroutine(AimOffCoroutine());
-        }
+        
     }
 
+    //조준 취소
     public void CancleAim()
     {
         if (isAim)
@@ -203,7 +232,51 @@ public class GunController : MonoBehaviour
         }
     }
 
-    IEnumerator AimOnCoroutine()
+    //재장전 취소
+    public void CancleReload()
+    {
+        if (isReload)
+        {
+            StopAllCoroutines();
+            isReload = false;
+        }
+    }
+
+    //피격
+    private void Hit()
+    {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward + 
+            new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy), 
+                        Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy), 
+                        0), 
+                        out hitInfo, gun.range))
+        {
+            GameObject clone = Instantiate(hit_effec, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            clone.GetComponent<ParticleSystem>().Play();
+            Destroy(clone, 1.5f);
+        }
+    }
+
+    //무기 교체
+    public void HandGunChange()
+    {
+        //교체되는 무기 비활성화
+        if (WeaponManager.currentWeaponTr != null)
+        {
+            WeaponManager.currentWeaponTr.gameObject.SetActive(false);
+        }
+
+        //교체할 무기의 정보 받기
+        WeaponManager.currentWeaponTr = GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = GetComponent<Animator>();
+
+        //교체할 무기 활성화
+        gameObject.SetActive(true);
+        isGuncActivated = true;
+
+    }
+
+    /*IEnumerator AimOnCoroutine()
     {
         while (transform.localPosition != AimOriginPos)
         {
@@ -220,7 +293,7 @@ public class GunController : MonoBehaviour
             yield return null;
         }
     }
-
+    */
 
 
 }

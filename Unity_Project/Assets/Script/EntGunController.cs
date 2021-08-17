@@ -19,21 +19,38 @@ public class EntGunController : MonoBehaviour
     [SerializeField]
     private int chargeGauge = 0;
 
+    [SerializeField]
+    private Camera cam;
+
+    private RaycastHit hitInfo;
+
     private AudioSource audioSource;
 
     private Gun gun;
 
+    public static bool isEntGunActivated ;
+
+    private Crosshair crosshair;
+
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        gun = GetComponent<Gun>();
+        gun = FindObjectOfType<Gun>();
+        crosshair = FindObjectOfType<Crosshair>();
+        WeaponManager.currentWeaponTr = gun.GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = gun.anim;
     }
 
     void Update()
     {
-        FireRateCalc();
-        BeforeFire();
-        BeforeAim();
+        if (isEntGunActivated)
+        {
+            FireRateCalc();
+            BeforeFire();
+            BeforeAim();
+        }
+        
     }
 
     //발사 속도 제어
@@ -67,9 +84,10 @@ public class EntGunController : MonoBehaviour
             }
             else
             {
-                CancleAim();
                 BeforeChargeFire();
             }
+        crosshair.FireAnimation();
+        Hit();
         
     }
 
@@ -87,7 +105,7 @@ public class EntGunController : MonoBehaviour
         }
         GunSound(fire_Sound);
         fireRateValue = gun.fireRate;
-        //gun.muzzleFlash.Play();
+        gun.muzzleFlash.Play();
         ChargeCalc();
         
     }
@@ -132,6 +150,7 @@ public class EntGunController : MonoBehaviour
     {
         isAim = !isAim;
         gun.anim.SetBool("Aim", isAim);
+        crosshair.AimAnimation(isAim);
     }
 
     public void CancleAim()
@@ -140,5 +159,36 @@ public class EntGunController : MonoBehaviour
         {
             Aim();
         }
+    }
+
+    private void Hit()
+    {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward +
+            new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
+                        Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
+                        0),
+                        out hitInfo, gun.range))
+        {
+            //피격대상 경직
+        }
+    }
+
+    //무기교체
+    public void EntGunChange()
+    {
+        //교체되는 무기 비활성화
+        if (WeaponManager.currentWeaponTr != null)
+        {
+            WeaponManager.currentWeaponTr.gameObject.SetActive(false);
+        }
+
+        //교체할 무기의 정보 받기
+        WeaponManager.currentWeaponTr = GetComponent<Transform>();
+        WeaponManager.currentWeaponAnim = GetComponent<Animator>();
+
+        //교체할 무기 활성화
+        gameObject.SetActive(true);
+        isEntGunActivated = true;
+
     }
 }
