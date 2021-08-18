@@ -28,7 +28,7 @@ public class EntGunController : MonoBehaviour
 
     private Gun gun;
 
-    public static bool isEntGunActivated ;
+    public static bool isEntGunActivated = true ;
 
     private Crosshair crosshair;
 
