@@ -99,6 +99,7 @@ public class StickController : MonoBehaviour
             {
                 isSwing = false;
                 Debug.Log(hitInfo.transform.name);
+                //적 데미지 & 마비
             }
             yield return null;
         }

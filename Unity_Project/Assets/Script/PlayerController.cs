@@ -47,6 +47,14 @@ public class PlayerController : MonoBehaviour
 
     private Crosshair crosshair;
 
+    [SerializeField]
+    private float hp;
+
+    [SerializeField]
+    private EnemyController EnemyCon;
+
+    private bool isShock = false;
+
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -62,18 +70,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        RotationY();
-        RotationX();
-        MoveCheck();
+        if (!isShock)
+        {
+            RotationY();
+            RotationX();
+            MoveCheck();
+        }
+        
 
     }
 
     void FixedUpdate()
     {
-        Jump();
-        Move();
-        Run();
-        IsGround();
+        if (!isShock)
+        {
+            Jump();
+            Move();
+            Run();
+            IsGround();
+        }
+        
     }
 
     //이동
@@ -212,6 +228,23 @@ public class PlayerController : MonoBehaviour
         {
             playerRigid.velocity = transform.up * jumpForce;
         }
+    }
+
+    public void StickAttacked()
+    {
+        StartCoroutine(StickAttackedCoroutine());
+    }
+
+    //적으로부터 스틱공격 코루틴
+    IEnumerator StickAttackedCoroutine()
+    {
+        hp -= EnemyCon.stickDamage;
+        isShock = true;
+        
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log(hp);
+        isShock = false;
+        
     }
 
 }
