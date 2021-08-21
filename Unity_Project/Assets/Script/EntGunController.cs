@@ -22,6 +22,9 @@ public class EntGunController : MonoBehaviour
     [SerializeField]
     private Camera cam;
 
+    [SerializeField]
+    private LayerMask layerMask;
+
     private RaycastHit hitInfo;
 
     private AudioSource audioSource;
@@ -103,7 +106,7 @@ public class EntGunController : MonoBehaviour
             gun.anim.SetTrigger("Fire");
 
         }
-        GunSound(fire_Sound);
+        audioSource.PlayOneShot(fire_Sound);
         fireRateValue = gun.fireRate;
         gun.muzzleFlash.Play();
         ChargeCalc();
@@ -117,7 +120,7 @@ public class EntGunController : MonoBehaviour
         {
             chargeGauge = 100;
             isCharge = true;
-            GunSound(charge_Alert);
+            audioSource.PlayOneShot(charge_Alert);
         }
     }
 
@@ -128,14 +131,6 @@ public class EntGunController : MonoBehaviour
         //적 멈춤 함수
 
     }
-
-    //효과음
-    private void GunSound(AudioClip _clip)
-    {
-        audioSource.clip = _clip;
-        audioSource.Play();
-    }
-
 
     //정조준 조건
     private void BeforeAim()
@@ -167,7 +162,7 @@ public class EntGunController : MonoBehaviour
             new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
                         Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
                         0),
-                        out hitInfo, gun.range))
+                        out hitInfo, gun.range, layerMask))
         {
             //피격대상 경직
         }

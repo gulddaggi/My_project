@@ -37,6 +37,9 @@ public class StickController : MonoBehaviour
     //레이케스트
     private RaycastHit hitInfo;
 
+    [SerializeField]
+    private LayerMask layerMask;
+
     //애니메이션
     public Animator anim;
 
@@ -44,9 +47,15 @@ public class StickController : MonoBehaviour
 
     private Crosshair crosshair;
 
+    [SerializeField]
+    private AudioClip stickSound;
+
+    private AudioSource audioSource;
+
     void Start()
     {
         crosshair = FindObjectOfType<Crosshair>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -81,6 +90,7 @@ public class StickController : MonoBehaviour
 
         //피격 시점
         StartCoroutine(HitCoroutine());
+        StickSound(stickSound);
 
         yield return new WaitForSeconds(attackOutDelay);
         isSwing = false;
@@ -108,7 +118,7 @@ public class StickController : MonoBehaviour
     //피격 확인
     private bool CheckObject()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, range))
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, range, layerMask))
         {
             return true;
         }
@@ -117,6 +127,13 @@ public class StickController : MonoBehaviour
             return false;
         }
 
+    }
+
+    //타격시 효과음
+    private void StickSound(AudioClip _clip)
+    {
+        audioSource.clip = _clip;
+        audioSource.Play();
     }
 
     //무기교체

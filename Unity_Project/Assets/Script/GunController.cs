@@ -58,6 +58,9 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private GameObject hit_effec;
 
+    [SerializeField]
+    private LayerMask layerMask;
+
     public static bool isGuncActivated; //활성화여부
 
     void Start()
@@ -249,7 +252,7 @@ public class GunController : MonoBehaviour
             new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy), 
                         Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy), 
                         0), 
-                        out hitInfo, gun.range))
+                        out hitInfo, gun.range, layerMask))
         {
             GameObject clone = Instantiate(hit_effec, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             clone.GetComponent<ParticleSystem>().Play();
@@ -275,25 +278,4 @@ public class GunController : MonoBehaviour
         isGuncActivated = true;
 
     }
-
-    /*IEnumerator AimOnCoroutine()
-    {
-        while (transform.localPosition != AimOriginPos)
-        {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, AimOriginPos, 0.2f);
-            yield return null;
-        }
-
-    }
-    IEnumerator AimOffCoroutine()
-    {
-        while (transform.localPosition != originPos)
-        {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, originPos, 0.2f);
-            yield return null;
-        }
-    }
-    */
-
-
 }
