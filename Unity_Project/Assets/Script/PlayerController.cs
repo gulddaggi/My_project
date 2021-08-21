@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     private Crosshair crosshair;
 
     [SerializeField]
-    private float hp;
+    public float hp;
 
     [SerializeField]
     private EnemyController EnemyCon;
@@ -238,13 +238,19 @@ public class PlayerController : MonoBehaviour
     //적으로부터 스틱공격 코루틴
     IEnumerator StickAttackedCoroutine()
     {
-        hp -= EnemyCon.stickDamage;
+        DecreaseHp(EnemyCon.stickDamage);
         isShock = true;
         
         yield return new WaitForSeconds(3.0f);
         Debug.Log(hp);
         isShock = false;
-        
+    }
+
+    //체력감소
+    public float DecreaseHp(float _damage)
+    {
+        hp -= _damage;
+        return hp;
     }
 
 }

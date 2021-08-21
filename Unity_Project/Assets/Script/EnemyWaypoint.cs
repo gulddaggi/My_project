@@ -11,20 +11,22 @@ public class EnemyWaypoint : MonoBehaviour
     [SerializeField]
     private Transform[] waypoints;
 
-    [SerializeField]
-    private PointOfView POV;
-
     private int currentWaypoint;
 
+    [SerializeField]
+    private Transform goal;
        
     void Start()
     {
         navMeshAgent.SetDestination(waypoints[0].position);
+        //navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
         Patrol();
+        //navMeshAgent.destination = goal.position;
+
     }
 
     private void Patrol()

@@ -17,12 +17,6 @@ public class PointOfView : MonoBehaviour
     [SerializeField]
     private EnemyController enemyCon;
 
-
-    void Update()
-    {
-
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.transform == player)
@@ -55,3 +49,4 @@ public class PointOfView : MonoBehaviour
     }
 
 }
+
