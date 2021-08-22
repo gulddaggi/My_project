@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private EnemyController EnemyCon;
 
+    [SerializeField]
+    private Status status;
+
 
     private bool isShock = false;
 
@@ -241,7 +244,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!EnemyCon.isEnt)
         {
-            DecreaseHp(EnemyCon.stickDamage);
+            status.DecreaseHP((int)EnemyCon.stickDamage);
             isShock = true;
 
             yield return new WaitForSeconds(3.0f);

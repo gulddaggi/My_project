@@ -99,6 +99,9 @@ public class EnemyController : MonoBehaviour
 
     public bool isEnt = false;
 
+    [SerializeField]
+    private Status status;
+
     void Start()
     {
         Stick.SetActive(false);
@@ -180,6 +183,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //»ç°ÝÀ½
     private void GunSound(AudioClip _clip)
     {
         audioSource.clip = _clip;
@@ -195,7 +199,7 @@ public class EnemyController : MonoBehaviour
 
         yield return new WaitForSeconds(shotDelayA);
 
-        playerCon.DecreaseHp(gunDamage);
+        status.DecreaseHP((int)gunDamage);
         Debug.Log(playerCon.hp);
             
         yield return new WaitForSeconds(shotDelayB);
