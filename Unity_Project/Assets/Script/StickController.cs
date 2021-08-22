@@ -52,6 +52,9 @@ public class StickController : MonoBehaviour
 
     private AudioSource audioSource;
 
+    [SerializeField]
+    private EnemyController enemyCon;
+
     void Start()
     {
         crosshair = FindObjectOfType<Crosshair>();
@@ -109,7 +112,10 @@ public class StickController : MonoBehaviour
             {
                 isSwing = false;
                 Debug.Log(hitInfo.transform.name);
-                //적 데미지 & 마비
+                if (hitInfo.transform.tag == "Enemy")
+                {
+                    enemyCon.BeforeStickAttaked(damage);
+                }
             }
             yield return null;
         }
@@ -126,7 +132,6 @@ public class StickController : MonoBehaviour
         {
             return false;
         }
-
     }
 
     //타격시 효과음

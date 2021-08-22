@@ -17,7 +17,7 @@ public class EntGunController : MonoBehaviour
     private AudioClip charge_Alert;
 
     [SerializeField]
-    private int chargeGauge = 0;
+    public int chargeGauge = 0;
 
     [SerializeField]
     private Camera cam;
@@ -158,13 +158,12 @@ public class EntGunController : MonoBehaviour
 
     private void Hit()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward +
-            new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
-                        Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
-                        0),
-                        out hitInfo, gun.range, layerMask))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, gun.range, layerMask))
         {
-            //피격대상 경직
+            if (hitInfo.transform.tag == "Enemy")
+            {
+                gun.enemyCon.EntGunAttacked();
+            }
         }
     }
 

@@ -14,29 +14,31 @@ public class EnemyWaypoint : MonoBehaviour
     private int currentWaypoint;
 
     [SerializeField]
-    private Transform goal;
-       
-    void Start()
+    private EnemyController enemyCon;
+
+    void Awake()
     {
         navMeshAgent.SetDestination(waypoints[0].position);
-        //navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
-        Patrol();
-        //navMeshAgent.destination = goal.position;
-
+        if (!enemyCon.isShocked)
+        {
+            Patrol();
+        }
     }
 
-    private void Patrol()
+    public void Patrol()
     {
         if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
         {
             currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
             navMeshAgent.SetDestination(waypoints[currentWaypoint].position);
         }
+
     }
+
 
     public void AttackNAvSetting()
     {

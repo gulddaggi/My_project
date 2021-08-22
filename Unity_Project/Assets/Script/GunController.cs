@@ -257,6 +257,12 @@ public class GunController : MonoBehaviour
             GameObject clone = Instantiate(hit_effec, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             clone.GetComponent<ParticleSystem>().Play();
             Destroy(clone, 1.5f);
+            if (hitInfo.transform.tag == "Enemy")
+            {
+                gun.enemyCon.HandGunAttacked(gun.damage);
+            }
+
+
         }
     }
 

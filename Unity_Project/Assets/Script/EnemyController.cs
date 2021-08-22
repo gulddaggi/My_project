@@ -50,12 +50,6 @@ public class EnemyController : MonoBehaviour
     public Animator anim;
 
     [SerializeField]
-    private Rigidbody rigid;
-
-    [SerializeField]
-    private BoxCollider boxcol;
-
-    [SerializeField]
     private PlayerController playerCon;
 
     //공격시작 딜레이
@@ -96,8 +90,14 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private EnemyWaypoint Waypoint;
 
+    [SerializeField]
+    private EntGunController entGunCon;
+
     public bool isPlayerInRange;
 
+    public bool isShocked = false;
+
+    public bool isEnt = false;
 
     void Start()
     {
@@ -107,7 +107,16 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        MoveCheck();
+        if (!isShocked && !isEnt)
+        {
+            MoveCheck();
+        }
+        else if (isEnt)
+        {
+            StopAllCoroutines();
+            EntGunAttacked();
+        }
+
     }
 
     //움직임 확인
@@ -115,11 +124,11 @@ public class EnemyController : MonoBehaviour
     {
         if (!isRun)
         {
-            if (Vector3.Distance(lastPos, transform.position) >= 0.01f)
+            if (Vector3.Distance(lastPos, transform.position) >= 0.001f)
             {
                 isWalk = true;
             }
-            else if (Vector3.Distance(lastPos, transform.position) < 0.01f)
+            else if (Vector3.Distance(lastPos, transform.position) < 0.001f)
             {
                 isWalk = false;
 
@@ -141,6 +150,7 @@ public class EnemyController : MonoBehaviour
     //근접공격코루틴
     IEnumerator StickAttackCoroutine()
     {
+        
         isStickAttack = true;
         Stick.SetActive(true);
         rifle.SetActive(false);
@@ -179,10 +189,9 @@ public class EnemyController : MonoBehaviour
     IEnumerator ShotCoroutine()
     {
         isPlayerInRange = true;
-        Waypoint.AttackNAvSetting();
         anim.SetTrigger("Attack");
         GunSound(gunSound);
-
+        Waypoint.AttackNAvSetting();
 
         yield return new WaitForSeconds(shotDelayA);
 
@@ -192,10 +201,75 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(shotDelayB);
 
         Waypoint.NavSettingReturn();
-
-        yield return new WaitForSeconds(shotDelayA);
-
         isPlayerInRange = false;
+    }
+
+    //스틱피격확인
+    public void BeforeStickAttaked(int _damage)
+    {
+        DecreaseHp(_damage);
+        StartCoroutine(StickAttackedCoroutine());
+
+    }
+
+    //스틱피격코루틴
+    IEnumerator StickAttackedCoroutine()
+    {
+        isShocked = true;
+        rifle.SetActive(false);
+        anim.SetBool("Shock", isShocked);
+        Waypoint.AttackNAvSetting();
+
+        yield return new WaitForSeconds(3.0f);
+
+        Waypoint.NavSettingReturn();
+        isShocked = false;
+        anim.SetBool("Shock", isShocked);
+        rifle.SetActive(true);
+    }
+
+    //권총피격
+    public void HandGunAttacked(int _damage)
+    {
+        DecreaseHp(_damage);
+    }
+
+    //엔트로피총피격
+    public void EntGunAttacked()
+    {
+        if (entGunCon.chargeGauge < 100)
+        {
+            StartCoroutine(EntGunAttackedCoroutine());
+        }
+    }
+
+    //엔트로피총피격코루틴
+    IEnumerator EntGunAttackedCoroutine()
+    {
+        isEnt = true;
+        Waypoint.AttackNAvSetting();
+        anim.speed = 0f;
+
+        yield return new WaitForSeconds(10f);
+
+        isEnt = false;
+        Waypoint.NavSettingReturn();
+        anim.speed = 1f;
+    }
+
+
+
+
+    private int DecreaseHp(int _damage)
+    {
+        if (!isEnt)
+        {
+            hp -= _damage;
+            Debug.Log(hp);
+        }
+        return hp;
+
+
     }
 
 }

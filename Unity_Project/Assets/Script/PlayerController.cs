@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private EnemyController EnemyCon;
 
+
     private bool isShock = false;
 
     void Start()
@@ -238,12 +239,16 @@ public class PlayerController : MonoBehaviour
     //적으로부터 스틱공격 코루틴
     IEnumerator StickAttackedCoroutine()
     {
-        DecreaseHp(EnemyCon.stickDamage);
-        isShock = true;
-        
-        yield return new WaitForSeconds(3.0f);
-        Debug.Log(hp);
-        isShock = false;
+        if (!EnemyCon.isEnt)
+        {
+            DecreaseHp(EnemyCon.stickDamage);
+            isShock = true;
+
+            yield return new WaitForSeconds(3.0f);
+            Debug.Log(hp);
+            isShock = false;
+        }
+       
     }
 
     //체력감소

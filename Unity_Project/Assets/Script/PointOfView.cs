@@ -19,17 +19,16 @@ public class PointOfView : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform == player)
+        if (other.transform == player && !enemyCon.isEnt)
         {
             isPlayerInRange = true;
-            Waypoint.AttackNAvSetting();
             StickAttack();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform == player)
+        if (other.transform == player && !enemyCon.isEnt)
         {
             isPlayerInRange = false;
             Waypoint.NavSettingReturn();

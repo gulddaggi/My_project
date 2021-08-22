@@ -18,4 +18,6 @@ public class Gun : MonoBehaviour
 
     public ParticleSystem muzzleFlash; //ÃÑ±¸¼¶±¤
 
+    public EnemyController enemyCon;
+
 }

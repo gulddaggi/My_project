@@ -35,7 +35,10 @@ public class GunSensor : MonoBehaviour
 
     void Update()
     {
-        Sensor();
+        if (!enemyCon.isEnt)
+        {
+            Sensor();
+        }
     }
 
     private Vector3 Boundary(float _angle)
