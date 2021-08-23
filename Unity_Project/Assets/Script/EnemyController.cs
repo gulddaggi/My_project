@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
     //상태확인
     private bool isWalk;
     private bool isRun;
-    private bool isDead;
+    private bool isDead = false;
     private bool isShoot;
     public bool isStickAttack = false;
 
@@ -93,11 +93,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private EntGunController entGunCon;
 
+    [SerializeField]
+    private GunSensor gunSensor;
+
+    [SerializeField]
+    private float stopTime;
+
     public bool isPlayerInRange;
 
     public bool isShocked = false;
 
     public bool isEnt = false;
+
 
     [SerializeField]
     private Status status;
@@ -116,8 +123,9 @@ public class EnemyController : MonoBehaviour
         }
         else if (isEnt)
         {
-            StopAllCoroutines();
-            EntGunAttacked();
+            Waypoint.AttackNAvSetting();
+            //StopAllCoroutines();
+            //EntGunAttacked();
         }
 
     }
@@ -196,11 +204,12 @@ public class EnemyController : MonoBehaviour
         anim.SetTrigger("Attack");
         GunSound(gunSound);
         Waypoint.AttackNAvSetting();
+        gunSensor.RotationSensor();
+
 
         yield return new WaitForSeconds(shotDelayA);
 
         status.DecreaseHP((int)gunDamage);
-        Debug.Log(playerCon.hp);
             
         yield return new WaitForSeconds(shotDelayB);
 
@@ -250,11 +259,13 @@ public class EnemyController : MonoBehaviour
     //엔트로피총피격코루틴
     IEnumerator EntGunAttackedCoroutine()
     {
+        yield return new WaitForSeconds(0.01f);
+
         isEnt = true;
         Waypoint.AttackNAvSetting();
         anim.speed = 0f;
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(stopTime);
 
         isEnt = false;
         Waypoint.NavSettingReturn();

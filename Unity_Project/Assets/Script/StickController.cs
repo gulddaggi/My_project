@@ -114,7 +114,7 @@ public class StickController : MonoBehaviour
                 Debug.Log(hitInfo.transform.name);
                 if (hitInfo.transform.tag == "Enemy")
                 {
-                    enemyCon.BeforeStickAttaked(damage);
+                    hitInfo.transform.GetComponent<EnemyController>().BeforeStickAttaked(damage);
                 }
             }
             yield return null;

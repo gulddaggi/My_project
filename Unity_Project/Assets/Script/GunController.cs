@@ -259,7 +259,7 @@ public class GunController : MonoBehaviour
             Destroy(clone, 1.5f);
             if (hitInfo.transform.tag == "Enemy")
             {
-                gun.enemyCon.HandGunAttacked(gun.damage);
+                hitInfo.transform.GetComponent<EnemyController>().HandGunAttacked(gun.damage);
             }
 
 

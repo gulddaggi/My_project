@@ -23,6 +23,7 @@ public class PointOfView : MonoBehaviour
         {
             isPlayerInRange = true;
             StickAttack();
+            Waypoint.AttackNAvSetting();
         }
     }
 
@@ -31,7 +32,7 @@ public class PointOfView : MonoBehaviour
         if (other.transform == player && !enemyCon.isEnt)
         {
             isPlayerInRange = false;
-            Waypoint.NavSettingReturn();
+            //Waypoint.NavSettingReturn();
         }
     }
 

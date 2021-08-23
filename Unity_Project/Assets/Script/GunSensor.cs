@@ -26,6 +26,8 @@ public class GunSensor : MonoBehaviour
 
     [SerializeField]
     private PlayerController playerCon;
+
+    private Vector3 direction;
     
 
     void Start()
@@ -59,17 +61,17 @@ public class GunSensor : MonoBehaviour
             Transform _targetTf = _target[i].transform;
             if (_targetTf.name == "Player")
             {
-                Vector3 _direction = (_targetTf.position - transform.position).normalized;
-                float _angle = Vector3.Angle(_direction, transform.forward);
+                direction = (_targetTf.position - transform.position).normalized;
+                float _angle = Vector3.Angle(direction, transform.forward);
                 if (_angle < viewAngle * 0.5f)
                 {
                     RaycastHit _hitInfo;
 
-                    if (Physics.Raycast(transform.position, _direction, out _hitInfo, viewRange))
+                    if (Physics.Raycast(transform.position, direction, out _hitInfo, viewRange))
                     {
                         if (_hitInfo.transform.name == "Player" && !POV.isPlayerInRange)
                         {
-                            enemyCon.BeforeSensorShot();
+                            this.enemyCon.BeforeSensorShot();
                         }
                     }
                 }
@@ -77,6 +79,9 @@ public class GunSensor : MonoBehaviour
         }
     }
 
-    
+    public void RotationSensor()
+    {
+        transform.rotation = Quaternion.LookRotation(direction).normalized;
+    }
 
 }

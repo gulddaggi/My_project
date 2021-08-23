@@ -23,6 +23,16 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField]
     private Text pickUPText;
 
+    [SerializeField]
+    private Status status;
+
+    [SerializeField]
+    private int firstAidKit;
+
+    [SerializeField]
+    private int shield;
+
+    
     void Update()
     {
         CheckItem();
@@ -49,9 +59,22 @@ public class ItemPickUp : MonoBehaviour
                 Debug.Log(hitInfo.transform.name + "È¹µæ");
                 Destroy(hitInfo.transform.gameObject);
                 TextDisappear();
+                if (hitInfo.transform.name == "FirstAidKit")
+                {
+                    FirstAidKit();
+                }
+                else if (hitInfo.transform.name == "Shield")
+                {
+                    Shield();
+                }
+                else
+                {
+                    Card();
+                }
             }
         }
     }
+
 
     private void CheckItem()
     {
@@ -81,5 +104,20 @@ public class ItemPickUp : MonoBehaviour
     {
         isPickUp = false;
         pickUPText.gameObject.SetActive(false);
+    }
+
+    private void FirstAidKit()
+    {
+        status.IncreaseHP(firstAidKit);
+    }
+
+    private void Shield()
+    {
+        status.IncreaseShield(shield);
+    }
+
+    private void Card()
+    {
+
     }
 }

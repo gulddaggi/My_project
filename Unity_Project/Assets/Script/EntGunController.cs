@@ -8,6 +8,8 @@ public class EntGunController : MonoBehaviour
 
     private bool isCharge = false;
 
+    public static bool isEntGunActivated = true;
+
     private float fireRateValue; //계산할 발사속도 값
 
     [SerializeField]
@@ -31,9 +33,17 @@ public class EntGunController : MonoBehaviour
 
     private Gun gun;
 
-    public static bool isEntGunActivated = true ;
 
     private Crosshair crosshair;
+
+    [SerializeField]
+    private Status status;
+
+    [SerializeField]
+    private int entCount;
+
+    [SerializeField]
+    private int max_Ent;
 
 
     void Start()
@@ -109,18 +119,19 @@ public class EntGunController : MonoBehaviour
         audioSource.PlayOneShot(fire_Sound);
         fireRateValue = gun.fireRate;
         gun.muzzleFlash.Play();
-        ChargeCalc();
-        
+
     }
 
     private void ChargeCalc()
     {
-        chargeGauge += 10;
-        if (chargeGauge >= 100)
+        chargeGauge += entCount;
+        status.IncreaseEnt(entCount);
+        if (chargeGauge >= max_Ent)
         {
-            chargeGauge = 100;
+            chargeGauge = max_Ent;
             isCharge = true;
             audioSource.PlayOneShot(charge_Alert);
+
         }
     }
 
@@ -162,7 +173,12 @@ public class EntGunController : MonoBehaviour
         {
             if (hitInfo.transform.tag == "Enemy")
             {
-                gun.enemyCon.EntGunAttacked();
+                hitInfo.transform.GetComponent<EnemyController>().EntGunAttacked();
+                if (!hitInfo.transform.GetComponent<EnemyController>().isEnt)
+                {
+                    ChargeCalc();
+                }
+
             }
         }
     }

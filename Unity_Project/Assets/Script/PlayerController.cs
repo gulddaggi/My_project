@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Status status;
 
-
     private bool isShock = false;
 
     void Start()
@@ -181,10 +180,11 @@ public class PlayerController : MonoBehaviour
     //´Þ¸®±â
     private void Run()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && status.GetSp() > 0)
         {
             isRun = true;
             currentSpeed = runSpeed;
+            status.DecreaseSp(1);
 
             if (EntGunController.isEntGunActivated)
             {
@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        else if (!Input.GetKey(KeyCode.LeftShift))
+        else if (!Input.GetKey(KeyCode.LeftShift) || status.GetSp() <= 0)
         {
             isRun = false;
 
