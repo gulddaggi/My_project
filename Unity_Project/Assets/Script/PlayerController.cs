@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Status status;
 
-    private bool isShock = false;
+    public bool isShock = false;
 
     private GameManager gameManager;
 
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!isShock || gameManager.canPlayerMove)
+        if (!isShock && gameManager.canPlayerMove)
         {
             RotationY();
             RotationX();
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isShock || gameManager.canPlayerMove)
+        if (!isShock && gameManager.canPlayerMove)
         {
             Jump();
             Move();
