@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float rotationLimit;
 
-    private float currentCameraRotationX = 0;
+    private float currentCameraRotationX;
 
     [SerializeField]
     private Camera playerCamera;
@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isShock = false;
 
+    private GameManager gameManager;
+
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -68,24 +70,25 @@ public class PlayerController : MonoBehaviour
         EntGun = FindObjectOfType<EntGunController>();
         crosshair = FindObjectOfType<Crosshair>();
         Gun = FindObjectOfType<Gun>();
+        gameManager = FindObjectOfType<GameManager>();
+
     }
 
 
     void Update()
     {
-        if (!isShock)
+        if (!isShock || gameManager.canPlayerMove)
         {
             RotationY();
             RotationX();
             MoveCheck();
         }
-        
 
     }
 
     void FixedUpdate()
     {
-        if (!isShock)
+        if (!isShock || gameManager.canPlayerMove)
         {
             Jump();
             Move();
@@ -161,6 +164,7 @@ public class PlayerController : MonoBehaviour
     //YÃà È¸Àü
     private void RotationY()
     {
+
         float _rotationX = Input.GetAxisRaw("Mouse Y");
         float _cameraRotationX = _rotationX * rotationSpeed;
         currentCameraRotationX -= _cameraRotationX;

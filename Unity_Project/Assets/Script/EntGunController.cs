@@ -45,6 +45,8 @@ public class EntGunController : MonoBehaviour
     [SerializeField]
     private int max_Ent;
 
+    private GameManager gameManager;
+
 
     void Start()
     {
@@ -53,6 +55,7 @@ public class EntGunController : MonoBehaviour
         crosshair = FindObjectOfType<Crosshair>();
         WeaponManager.currentWeaponTr = gun.GetComponent<Transform>();
         WeaponManager.currentWeaponAnim = gun.anim;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -82,7 +85,7 @@ public class EntGunController : MonoBehaviour
     //발사 조건
     private void BeforeFire()
     {
-        if (Input.GetButton("Fire1") && fireRateValue == 0 && !isCharge)
+        if (Input.GetButton("Fire1") && fireRateValue == 0 && !isCharge && !gameManager.isPause)
         {
             Fire();
         }
