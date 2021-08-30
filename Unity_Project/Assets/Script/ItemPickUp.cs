@@ -32,7 +32,12 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField]
     private int shield;
 
-    
+    public bool isCard = false;
+
+    public bool isHandgun = false;
+
+    public bool isStick = false;
+
     void Update()
     {
         CheckItem();
@@ -67,18 +72,27 @@ public class ItemPickUp : MonoBehaviour
                 {
                     Shield();
                 }
-                else
+                else if (hitInfo.transform.name == "Card")
                 {
                     Card();
                 }
+                else if (hitInfo.transform.name == "handgun")
+                {
+                    Handgun();
+                }
+                else if (hitInfo.transform.name == "stick")
+                {
+                    Stick();
+                }
             }
+
         }
     }
 
 
     private void CheckItem()
     {
-        if (Physics.Raycast(transform.position, transform.forward + Vector3.up, out hitInfo, pickUpRange, layerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, pickUpRange, layerMask))
         {
             if (hitInfo.transform.tag == "Item")
             {
@@ -118,6 +132,16 @@ public class ItemPickUp : MonoBehaviour
 
     private void Card()
     {
+        isCard = true;
+    }
 
+    private void Handgun()
+    {
+        isHandgun = true;
+    }
+
+    private void Stick()
+    {
+        isStick = true;
     }
 }

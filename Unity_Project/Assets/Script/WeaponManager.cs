@@ -34,6 +34,9 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private string[] Weapon;
 
+    [SerializeField]
+    private ItemPickUp itemPickUp;
+
 
     void Update()
     {
@@ -100,12 +103,12 @@ public class WeaponManager : MonoBehaviour
             entGun.EntGunChange();
             EntGunController.isEntGunActivated = true;
         }
-        else if (_name == "HandGun")
+        else if (_name == "HandGun" && itemPickUp.isHandgun)
         {
             handgun.HandGunChange();
             GunController.isGuncActivated = true;
         }
-        else if (_name == "Stick")
+        else if (_name == "Stick" && itemPickUp.isStick)
         {
             stick.StickChange();
             StickController.isStickActivated = true;
