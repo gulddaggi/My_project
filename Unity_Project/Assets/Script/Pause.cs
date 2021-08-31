@@ -12,7 +12,6 @@ public class Pause : MonoBehaviour
 
     private GameManager gameManager;
 
-
     void Start()
     {
         saveNLoad = FindObjectOfType<SaveNLoad>();

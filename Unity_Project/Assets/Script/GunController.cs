@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunController : MonoBehaviour
 {
@@ -66,6 +67,9 @@ public class GunController : MonoBehaviour
 
     public static bool isGuncActivated; //활성화여부
 
+    [SerializeField]
+    private Text[] text_Bullet;
+
 
 
     void Start()
@@ -84,6 +88,7 @@ public class GunController : MonoBehaviour
             BeforeFire();
             BeforeReload();
             BeforeAim();
+            BulletCounter();
         }
 
     }
@@ -290,6 +295,12 @@ public class GunController : MonoBehaviour
 
 
 
+    }
+
+    private void BulletCounter()
+    {
+        text_Bullet[0].text = remainBullet.ToString();
+        text_Bullet[1].text = carryBullet.ToString();
     }
 
 

@@ -20,8 +20,6 @@ public class SaveNLoad : MonoBehaviour
     private string SAVE_DATA_DIRECTORY;
     private string SAVE_FILENAME = "/SaveFile.txt";
 
-    
-
     void Awake()
     {
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Save";
