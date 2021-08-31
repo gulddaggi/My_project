@@ -55,6 +55,8 @@ public class StickController : MonoBehaviour
     [SerializeField]
     private EnemyController enemyCon;
 
+
+
     void Start()
     {
         crosshair = FindObjectOfType<Crosshair>();
@@ -157,6 +159,11 @@ public class StickController : MonoBehaviour
         //교체할 무기 활성화
         gameObject.SetActive(true);
         isStickActivated = true;
+
+
+
     }
+
+    
 
 }

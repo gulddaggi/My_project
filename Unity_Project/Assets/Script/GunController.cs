@@ -61,7 +61,12 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
 
+    [SerializeField]
+    private Status status;
+
     public static bool isGuncActivated; //활성화여부
+
+
 
     void Start()
     {
@@ -80,7 +85,7 @@ public class GunController : MonoBehaviour
             BeforeReload();
             BeforeAim();
         }
-        
+
     }
 
     //발사 속도 제어
@@ -223,7 +228,7 @@ public class GunController : MonoBehaviour
         gun.anim.SetBool("Aim", isAim);
         crosshair.AimAnimation(isAim);
 
-        
+
     }
 
     //조준 취소
@@ -248,10 +253,10 @@ public class GunController : MonoBehaviour
     //피격
     private void Hit()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward + 
-            new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy), 
-                        Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy), 
-                        0), 
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward +
+            new Vector3(Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
+                        Random.Range(-crosshair.Accuracy() - gun.accuracy, crosshair.Accuracy() + gun.accuracy),
+                        0),
                         out hitInfo, gun.range, layerMask))
         {
             GameObject clone = Instantiate(hit_effec, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
@@ -283,5 +288,9 @@ public class GunController : MonoBehaviour
         gameObject.SetActive(true);
         isGuncActivated = true;
 
+
+
     }
+
+
 }

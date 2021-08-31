@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
     //´Þ¸®±â
     private void Run()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && status.GetSp() > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && status.GetSp() > 0 && isWalk)
         {
             isRun = true;
             currentSpeed = runSpeed;

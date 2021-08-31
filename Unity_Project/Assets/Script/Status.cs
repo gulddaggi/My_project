@@ -48,6 +48,8 @@ public class Status : MonoBehaviour
     [SerializeField]
     private Image[] images;
 
+
+
     void Start()
     {
         currentHp = hp;

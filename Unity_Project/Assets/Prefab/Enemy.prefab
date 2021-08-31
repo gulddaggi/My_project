@@ -516,6 +516,8 @@ MonoBehaviour:
   shotDelayB: 0.2
   Waypoint: {fileID: 2086446600}
   entGunCon: {fileID: 0}
+  gunSensor: {fileID: 0}
+  stopTime: 0
   isPlayerInRange: 0
   isShocked: 0
   isEnt: 0

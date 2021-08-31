@@ -38,6 +38,8 @@ public class WeaponManager : MonoBehaviour
     private ItemPickUp itemPickUp;
 
 
+
+
     void Update()
     {
         if (!isChangeWeapon)
@@ -60,7 +62,6 @@ public class WeaponManager : MonoBehaviour
     public IEnumerator ChangeWeaponCoroutine(string _name)
     {
         isChangeWeapon = true;
-        //currentWeaponAnim.SetTrigger("Weapon_Out");
 
         yield return new WaitForSeconds(changeWeaponOnDelay);
 

@@ -48,6 +48,9 @@ public class EntGunController : MonoBehaviour
     private GameManager gameManager;
 
 
+
+
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -199,9 +202,14 @@ public class EntGunController : MonoBehaviour
         WeaponManager.currentWeaponTr = GetComponent<Transform>();
         WeaponManager.currentWeaponAnim = GetComponent<Animator>();
 
+
         //교체할 무기 활성화
         gameObject.SetActive(true);
+
         isEntGunActivated = true;
 
+
     }
+
+ 
 }
