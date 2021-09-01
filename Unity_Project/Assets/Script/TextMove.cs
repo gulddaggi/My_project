@@ -14,13 +14,13 @@ public class TextMove : MonoBehaviour
     private Button button;
 
     [SerializeField]
-    private SaveNLoad saveNLoad;
+    private string nextStage;
 
-    private GameManager gameManager;
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     void Update()
@@ -52,13 +52,13 @@ public class TextMove : MonoBehaviour
 
             images[i].gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
         }
         button.gameObject.SetActive(true);
     }
 
     public void Button()
     {
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene(nextStage);
     }
 }
