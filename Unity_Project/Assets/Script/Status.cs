@@ -48,6 +48,9 @@ public class Status : MonoBehaviour
     [SerializeField]
     private Image[] images;
 
+    [SerializeField]
+    private GameOver gameOver;
+
 
 
     void Start()
@@ -96,7 +99,9 @@ public class Status : MonoBehaviour
         if (currentHp <= 0)
         {
             currentHp = 0;
-            //게임오버
+            Time.timeScale = 0f;
+            gameOver.GameOverOn();
+
         }
     }
 

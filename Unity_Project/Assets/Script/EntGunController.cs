@@ -25,6 +25,9 @@ public class EntGunController : MonoBehaviour
     private GameObject charge_Fire_Effect;
 
     [SerializeField]
+    private GameObject uncharge_Fire_Effect;
+
+    [SerializeField]
     public static int chargeGauge = 0;
 
     [SerializeField]
@@ -32,6 +35,8 @@ public class EntGunController : MonoBehaviour
 
     [SerializeField]
     private LayerMask layerMask;
+    
+    
 
     private RaycastHit hitInfo;
 
@@ -106,6 +111,7 @@ public class EntGunController : MonoBehaviour
             else
             {
                 BeforeChargeFire();
+                Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, gun.range, layerMask);
             }
         Hit();
 
@@ -147,9 +153,14 @@ public class EntGunController : MonoBehaviour
     //충전발사(대상처치)상태
     private void BeforeChargeFire()
     {
-        chargeGauge = 0;
-        gun.anim.SetTrigger("Fire");
-        audioSource.PlayOneShot(charge_Fire_Sound);
+        if (hitInfo.transform.tag == "Enemy" || hitInfo.transform.tag == "Bomb")
+        {
+            Debug.Log("2");
+            chargeGauge = 0;
+            gun.anim.SetTrigger("Fire");
+            audioSource.PlayOneShot(charge_Fire_Sound);
+        }
+        
     }
 
     //정조준 조건
@@ -180,7 +191,7 @@ public class EntGunController : MonoBehaviour
     {
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, gun.range, layerMask))
         {
-            if (hitInfo.transform.tag == "Enemy")
+            if (hitInfo.transform.tag == "Enemy" || hitInfo.transform.tag == "Bomb")
             {
                 if (!isCharge)
                 {
@@ -188,10 +199,14 @@ public class EntGunController : MonoBehaviour
                     if (!hitInfo.transform.GetComponent<EnemyController>().isEnt)
                     {
                         ChargeCalc();
+                        GameObject clone = Instantiate(uncharge_Fire_Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                        Destroy(clone, 1.5f);
                     }
                 }
                 else if (isCharge)
                 {
+                    Debug.Log("3");
+
                     StartCoroutine(ReturnCoroutine());   
 
                 }
@@ -206,8 +221,20 @@ public class EntGunController : MonoBehaviour
     {
         GameObject clone = Instantiate(charge_Fire_Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
         Destroy(clone, 1.5f);
+        Debug.Log("4");
         yield return null;
-        hitInfo.transform.GetComponent<EnemyController>().Dead();
+        if (hitInfo.transform.tag == "Enemy")
+        {
+            hitInfo.transform.GetComponent<EnemyController>().Dead();
+        }
+        else if (hitInfo.transform.tag == "Bomb")
+        {
+            Debug.Log("5");
+
+            hitInfo.transform.gameObject.SetActive(false);
+            status.DecreaseHP(100);
+            
+        }
         yield return null;
         isCharge = false;
         status.EntOut();

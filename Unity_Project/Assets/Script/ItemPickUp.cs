@@ -34,9 +34,9 @@ public class ItemPickUp : MonoBehaviour
 
     public bool isCard = false;
 
-    public bool isHandgun = false;
+    public static bool isHandgun = false;
 
-    public bool isStick = false;
+    public static bool isStick = false;
 
     void Update()
     {

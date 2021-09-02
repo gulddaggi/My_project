@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SaveData
 {
     public string sceneName;
+
 }
 
 public class SaveNLoad : MonoBehaviour
@@ -15,6 +16,9 @@ public class SaveNLoad : MonoBehaviour
     private SaveData saveData = new SaveData();
 
     private GameManager gameManager;
+
+    [SerializeField]
+    private ItemPickUp itemPickUp;
 
 
     private string SAVE_DATA_DIRECTORY;
@@ -43,6 +47,7 @@ public class SaveNLoad : MonoBehaviour
         if (File.Exists(SAVE_DATA_DIRECTORY + SAVE_FILENAME))
         {
             saveData.sceneName = SceneManager.GetActiveScene().name;
+
 
             string json = JsonUtility.ToJson(saveData);
 
@@ -78,8 +83,6 @@ public class SaveNLoad : MonoBehaviour
             gameManager.canPlayerMove = true;
 
             Debug.Log("로드 완료");
-            
-            
         }
         else
         {

@@ -509,7 +509,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  audioSource: {fileID: 420338487196764022, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+  audioSource: {fileID: 0}
   gunSound: {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
   gunDamage: 10
   shotDelayA: 0.2
@@ -673,8 +673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44417208a25855343b582f46dff31d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 60
-  viewRange: 30
+  viewAngle: 120
+  viewRange: 80
   targetMask:
     serializedVersion: 2
     m_Bits: 64

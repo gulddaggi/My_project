@@ -17,7 +17,4 @@ public class Gun : MonoBehaviour
     public Animator anim; //局聪皋捞记
 
     public ParticleSystem muzzleFlash; //醚备级堡
-
-    public EnemyController enemyCon;
-
 }

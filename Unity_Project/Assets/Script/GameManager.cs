@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public bool isPause = false;
+    public bool isGameOver = false;
     public bool canPlayerMove = true;
 
     [SerializeField]
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (isPause)
+        if (isPause || isGameOver)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

@@ -48,11 +48,11 @@ public class WeaponManager : MonoBehaviour
             {
                 StartCoroutine(ChangeWeaponCoroutine(Weapon[0]));
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2) && itemPickUp.isHandgun)
+            if (Input.GetKeyDown(KeyCode.Alpha2) && ItemPickUp.isHandgun)
             {
                 StartCoroutine(ChangeWeaponCoroutine(Weapon[1]));
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3) && itemPickUp.isStick)
+            if (Input.GetKeyDown(KeyCode.Alpha3) && ItemPickUp.isStick)
             {
                 StartCoroutine(ChangeWeaponCoroutine(Weapon[2]));
             }
@@ -104,12 +104,12 @@ public class WeaponManager : MonoBehaviour
             entGun.EntGunChange();
             EntGunController.isEntGunActivated = true;
         }
-        else if (_name == "HandGun" && itemPickUp.isHandgun)
+        else if (_name == "HandGun" && ItemPickUp.isHandgun)
         {
             handgun.HandGunChange();
             GunController.isGuncActivated = true;
         }
-        else if (_name == "Stick" && itemPickUp.isStick)
+        else if (_name == "Stick" && ItemPickUp.isStick)
         {
             stick.StickChange();
             StickController.isStickActivated = true;

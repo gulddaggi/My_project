@@ -20,7 +20,7 @@ public class Pause : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && !gameManager.isGameOver)
         {
             if (!gameManager.isPause)
             {
@@ -51,6 +51,8 @@ public class Pause : MonoBehaviour
     {
         CloseMenu();
         saveNLoad.InGameLoad();
+        ItemPickUp.isHandgun = true;
+        ItemPickUp.isStick = true;
     }
 
     public void ClickExit()
