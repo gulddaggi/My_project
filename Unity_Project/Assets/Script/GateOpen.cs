@@ -19,6 +19,7 @@ public class GateOpen : MonoBehaviour
         if (itemPickUp.isCard)
         {
             door.SetTrigger("Card");
+            itemPickUp.isCard = false;
         }
 
     }
