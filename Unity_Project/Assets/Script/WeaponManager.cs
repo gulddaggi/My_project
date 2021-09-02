@@ -48,11 +48,11 @@ public class WeaponManager : MonoBehaviour
             {
                 StartCoroutine(ChangeWeaponCoroutine(Weapon[0]));
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha2) && itemPickUp.isHandgun)
             {
                 StartCoroutine(ChangeWeaponCoroutine(Weapon[1]));
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKeyDown(KeyCode.Alpha3) && itemPickUp.isStick)
             {
                 StartCoroutine(ChangeWeaponCoroutine(Weapon[2]));
             }
