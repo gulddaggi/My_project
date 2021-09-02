@@ -127,6 +127,10 @@ public class EnemyController : MonoBehaviour
             //StopAllCoroutines();
             //EntGunAttacked();
         }
+        if (hp <= 0)
+        {
+            Dead();
+        }
 
     }
 
@@ -250,10 +254,7 @@ public class EnemyController : MonoBehaviour
     //엔트로피총피격
     public void EntGunAttacked()
     {
-        if (entGunCon.chargeGauge < 100)
-        {
             StartCoroutine(EntGunAttackedCoroutine());
-        }
     }
 
     //엔트로피총피격코루틴
@@ -272,7 +273,13 @@ public class EnemyController : MonoBehaviour
         anim.speed = 1f;
     }
 
-
+    public void Dead()
+    {
+        isEnt = false;
+        //Waypoint.AttackNAvSetting();
+        anim.SetTrigger("Die");
+        Destroy(this.gameObject, 0.1f);
+    }
 
 
     private int DecreaseHp(int _damage)

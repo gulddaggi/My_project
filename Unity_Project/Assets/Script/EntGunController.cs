@@ -16,10 +16,16 @@ public class EntGunController : MonoBehaviour
     private AudioClip fire_Sound;
 
     [SerializeField]
+    private AudioClip charge_Fire_Sound;
+
+    [SerializeField]
     private AudioClip charge_Alert;
 
     [SerializeField]
-    public int chargeGauge = 0;
+    private GameObject charge_Fire_Effect;
+
+    [SerializeField]
+    public static int chargeGauge = 0;
 
     [SerializeField]
     private Camera cam;
@@ -46,10 +52,6 @@ public class EntGunController : MonoBehaviour
     private int max_Ent;
 
     private GameManager gameManager;
-
-
-
-
 
     void Start()
     {
@@ -88,7 +90,7 @@ public class EntGunController : MonoBehaviour
     //발사 조건
     private void BeforeFire()
     {
-        if (Input.GetButton("Fire1") && fireRateValue == 0 && !isCharge && !gameManager.isPause)
+        if (Input.GetButton("Fire1") && fireRateValue == 0 && !gameManager.isPause)
         {
             Fire();
         }
@@ -105,8 +107,9 @@ public class EntGunController : MonoBehaviour
             {
                 BeforeChargeFire();
             }
-        crosshair.FireAnimation();
         Hit();
+
+        crosshair.FireAnimation();
         
     }
 
@@ -145,8 +148,8 @@ public class EntGunController : MonoBehaviour
     private void BeforeChargeFire()
     {
         chargeGauge = 0;
-        //적 멈춤 함수
-
+        gun.anim.SetTrigger("Fire");
+        audioSource.PlayOneShot(charge_Fire_Sound);
     }
 
     //정조준 조건
@@ -179,14 +182,36 @@ public class EntGunController : MonoBehaviour
         {
             if (hitInfo.transform.tag == "Enemy")
             {
-                hitInfo.transform.GetComponent<EnemyController>().EntGunAttacked();
-                if (!hitInfo.transform.GetComponent<EnemyController>().isEnt)
+                if (!isCharge)
                 {
-                    ChargeCalc();
+                    hitInfo.transform.GetComponent<EnemyController>().EntGunAttacked();
+                    if (!hitInfo.transform.GetComponent<EnemyController>().isEnt)
+                    {
+                        ChargeCalc();
+                    }
                 }
+                else if (isCharge)
+                {
+                    StartCoroutine(ReturnCoroutine());   
+
+                }
+                
 
             }
+
         }
+    }
+
+    IEnumerator ReturnCoroutine()
+    {
+        GameObject clone = Instantiate(charge_Fire_Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+        Destroy(clone, 1.5f);
+        yield return null;
+        hitInfo.transform.GetComponent<EnemyController>().Dead();
+        yield return null;
+        isCharge = false;
+        status.EntOut();
+        chargeGauge = 0;
     }
 
     //무기교체
