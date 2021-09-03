@@ -13,8 +13,6 @@ public class TextMove : MonoBehaviour
     [SerializeField]
     private Button button;
 
-    [SerializeField]
-    private string nextStage;
 
 
     void Start()
@@ -57,8 +55,5 @@ public class TextMove : MonoBehaviour
         button.gameObject.SetActive(true);
     }
 
-    public void Button()
-    {
-        SceneManager.LoadScene(nextStage);
-    }
+
 }
