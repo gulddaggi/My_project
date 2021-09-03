@@ -5,6 +5,9 @@ public class GameOver : MonoBehaviour
     [SerializeField]
     private GameObject gameOver_Base;
 
+    [SerializeField]
+    private EntGunController entGunCon;
+
     private SaveNLoad saveNLoad;
 
     private GameManager gameManager;
