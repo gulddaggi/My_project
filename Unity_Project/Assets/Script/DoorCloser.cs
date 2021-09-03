@@ -14,11 +14,11 @@ public class DoorCloser : MonoBehaviour
     private Animator door;
 
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.transform == player)
         {
-            door.SetTrigger("Close");
+            this.door.SetTrigger("Close");
             itemPickUp.isCard = false;
 
         }
