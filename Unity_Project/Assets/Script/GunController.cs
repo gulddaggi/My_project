@@ -213,7 +213,6 @@ public class GunController : MonoBehaviour
         else
         {
             GunSound(dontReload_Sound);
-            Debug.Log("ÃÑ¾Ë ¾øÀ½");
         }
     }
 

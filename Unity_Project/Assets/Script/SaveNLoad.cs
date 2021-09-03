@@ -52,8 +52,6 @@ public class SaveNLoad : MonoBehaviour
             string json = JsonUtility.ToJson(saveData);
 
             File.WriteAllText(SAVE_DATA_DIRECTORY + SAVE_FILENAME, json);
-            Debug.Log("저장 완료");
-            Debug.Log(json);
         }
         else
         {
@@ -62,8 +60,6 @@ public class SaveNLoad : MonoBehaviour
             string json = JsonUtility.ToJson(saveData);
 
             File.WriteAllText(SAVE_DATA_DIRECTORY + SAVE_FILENAME, json);
-            Debug.Log("저장 완료");
-            Debug.Log(json);
         }
         
 
@@ -81,12 +77,12 @@ public class SaveNLoad : MonoBehaviour
 
             gameManager.isPause = false;
             gameManager.canPlayerMove = true;
+            ItemPickUp.isHandgun = true;
+            ItemPickUp.isStick = true;
 
-            Debug.Log("로드 완료");
         }
         else
         {
-            Debug.Log("세이브 파일 없음");
         }
     }
 

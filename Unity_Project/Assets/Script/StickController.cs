@@ -113,7 +113,6 @@ public class StickController : MonoBehaviour
             if (CheckObject())
             {
                 isSwing = false;
-                Debug.Log(hitInfo.transform.name);
                 if (hitInfo.transform.tag == "Enemy")
                 {
                     hitInfo.transform.GetComponent<EnemyController>().BeforeStickAttaked(damage);

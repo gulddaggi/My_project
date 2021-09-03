@@ -24,7 +24,6 @@ public class StageClear : MonoBehaviour
 
     private bool timer = false;
 
-    private bool isPlaying = false;
 
     [SerializeField]
     private string textScene;
@@ -35,23 +34,11 @@ public class StageClear : MonoBehaviour
         {
             StartCoroutine(ClearBaseCoroutine());
             timer = true;
-            Debug.Log("ÀÎ½Ä");
         }
-    }
-
-    private void ImageFade()
-    {
-        if (isPlaying == true)
-        {
-            return;
-        }
-
-        StartCoroutine(ClearBaseCoroutine());
     }
 
     IEnumerator ClearBaseCoroutine()
     {
-        isPlaying = true;
         clear_Base.SetActive(true);
         Color color = clear_Image.color;
         time = 0f;
@@ -67,7 +54,6 @@ public class StageClear : MonoBehaviour
             yield return null;
 
         }
-        isPlaying = false;
     }
 
     private void Update()
@@ -80,7 +66,7 @@ public class StageClear : MonoBehaviour
 
     IEnumerator SceneLoadCoroutine()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(textScene);
     }
 

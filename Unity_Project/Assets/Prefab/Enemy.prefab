@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413117211}
   m_LocalRotation: {x: -0.5865843, y: 0, z: 0, w: 0.8098882}
-  m_LocalPosition: {x: 0.07, y: 1.434, z: 1.29}
+  m_LocalPosition: {x: 0.07, y: 1.434, z: 1.637}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7463475457899104949}
@@ -43,8 +43,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 1.74
+  m_Radius: 0.59
+  m_Height: 1.86
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &895044463
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy
-  hp: 150
+  hp: 120
   walkSpeed: 3
   runSpeed: 5
   stickDamage: 5
@@ -502,21 +502,23 @@ MonoBehaviour:
   isStickAttack: 0
   anim: {fileID: 7463475457891689751}
   playerCon: {fileID: 0}
+  charge_Fire_Effect: {fileID: 100012, guid: 06cff0f24d5664781859b6da3e421fa4, type: 3}
   attackOnDelay: 0.5
-  attackOutDelay: 0.1
-  totalAttackDelay: 1
+  attackOutDelay: 0.3
+  totalAttackDelay: 1.2
   gunRange: 100
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 86205544}
   gunSound: {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
-  gunDamage: 10
+  gunDamage: 8
   shotDelayA: 0.2
   shotDelayB: 0.2
   Waypoint: {fileID: 2086446600}
   entGunCon: {fileID: 0}
   gunSensor: {fileID: 0}
+  stickSound: {fileID: 8300000, guid: 150c90461aa89c34db5a38453abdb903, type: 3}
   stopTime: 0
   isPlayerInRange: 0
   isShocked: 0
@@ -673,8 +675,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44417208a25855343b582f46dff31d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 120
-  viewRange: 80
+  viewAngle: 140
+  viewRange: 60
   targetMask:
     serializedVersion: 2
     m_Bits: 64

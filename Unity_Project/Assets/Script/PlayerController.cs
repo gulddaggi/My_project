@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour
             {
                 WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
             }
+            crosshair.RunAnimation(isRun);
 
         }
         else if (!Input.GetKey(KeyCode.LeftShift) || status.GetSp() <= 0)
@@ -222,11 +223,11 @@ public class PlayerController : MonoBehaviour
             {
                 WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
             }
+            crosshair.RunAnimation(isRun);
 
         }
         isRun = false;
 
-        crosshair.RunAnimation(isRun);
     }
 
     //มกวม
@@ -252,7 +253,6 @@ public class PlayerController : MonoBehaviour
             isShock = true;
 
             yield return new WaitForSeconds(3.0f);
-            Debug.Log(hp);
             isShock = false;
         }
        

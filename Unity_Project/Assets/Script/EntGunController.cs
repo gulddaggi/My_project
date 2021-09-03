@@ -28,7 +28,7 @@ public class EntGunController : MonoBehaviour
     private GameObject uncharge_Fire_Effect;
 
     [SerializeField]
-    public static int chargeGauge = 0;
+    public int chargeGauge = 0;
 
     [SerializeField]
     private Camera cam;
@@ -155,7 +155,6 @@ public class EntGunController : MonoBehaviour
     {
         if (hitInfo.transform.tag == "Enemy" || hitInfo.transform.tag == "Bomb")
         {
-            Debug.Log("2");
             chargeGauge = 0;
             gun.anim.SetTrigger("Fire");
             audioSource.PlayOneShot(charge_Fire_Sound);
@@ -205,7 +204,6 @@ public class EntGunController : MonoBehaviour
                 }
                 else if (isCharge)
                 {
-                    Debug.Log("3");
 
                     StartCoroutine(ReturnCoroutine());   
 
@@ -221,15 +219,13 @@ public class EntGunController : MonoBehaviour
     {
         GameObject clone = Instantiate(charge_Fire_Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
         Destroy(clone, 1.5f);
-        Debug.Log("4");
         yield return null;
         if (hitInfo.transform.tag == "Enemy")
         {
-            hitInfo.transform.GetComponent<EnemyController>().Dead();
+            hitInfo.transform.GetComponent<EnemyController>().EntDead();
         }
         else if (hitInfo.transform.tag == "Bomb")
         {
-            Debug.Log("5");
 
             hitInfo.transform.gameObject.SetActive(false);
             status.DecreaseHP(100);

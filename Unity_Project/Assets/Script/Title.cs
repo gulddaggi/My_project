@@ -11,7 +11,6 @@ public class Title : MonoBehaviour
     public void ClickStart()
     {
         SceneManager.LoadScene("Text1");
-        //saveNLoad.Save();
         Destroy(gameObject);
     }
 

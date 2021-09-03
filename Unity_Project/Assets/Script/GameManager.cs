@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public bool isPause = false;
     public bool isGameOver = false;
+    public bool istutorial = false;
     public bool canPlayerMove = true;
 
     [SerializeField]
     private GameObject player;
+
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (isPause || isGameOver)
+        if (isPause || isGameOver || istutorial)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

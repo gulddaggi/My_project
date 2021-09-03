@@ -11,17 +11,17 @@ public class GateOpen : MonoBehaviour
     private Transform player;
 
     [SerializeField]
-    private Animator door;
+    private DoorClose doorClose;
+
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (itemPickUp.isCard)
+        if (itemPickUp.isCard && other.transform == player)
         {
-            door.SetTrigger("Card");
-            itemPickUp.isCard = false;
+            doorClose.DoorCloser();
+
+
         }
-
     }
-
 }

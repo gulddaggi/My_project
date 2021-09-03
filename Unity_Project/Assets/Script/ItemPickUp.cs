@@ -61,7 +61,6 @@ public class ItemPickUp : MonoBehaviour
         {
             if (hitInfo.transform != null)
             {
-                Debug.Log(hitInfo.transform.name + "È¹µæ");
                 Destroy(hitInfo.transform.gameObject);
                 TextDisappear();
                 if (hitInfo.transform.name == "FirstAidKit")

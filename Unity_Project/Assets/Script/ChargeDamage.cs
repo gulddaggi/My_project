@@ -10,15 +10,7 @@ public class ChargeDamage : MonoBehaviour
 
     [SerializeField]
     private Status status;
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter(Collision collision)
     {

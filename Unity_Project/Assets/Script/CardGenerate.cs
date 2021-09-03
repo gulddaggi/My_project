@@ -14,10 +14,6 @@ public class CardGenerate : MonoBehaviour
 
     private bool cardCheck = false;
 
-    void Start()
-    {
-        
-    }
 
     void Update()
     {

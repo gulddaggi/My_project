@@ -17,13 +17,14 @@ public class PointOfView : MonoBehaviour
     [SerializeField]
     private EnemyController enemyCon;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.transform == player && !enemyCon.isEnt)
+        if (other.transform == player && !enemyCon.isEnt && !isPlayerInRange)
         {
-            isPlayerInRange = true;
             StickAttack();
         }
+
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -31,19 +32,14 @@ public class PointOfView : MonoBehaviour
         if (other.transform == player && !enemyCon.isEnt)
         {
             isPlayerInRange = false;
+
         }
     }
 
     private void StickAttack()
     {
-        Vector3 direction = player.position - transform.position;
-        Ray ray = new Ray(transform.position, direction);
-        Physics.Raycast(ray, out hitInfo);
-
-        if (hitInfo.collider.transform == player)
-        {
             enemyCon.BeforeStickAttack();
-        }
+        
     }
 
 }

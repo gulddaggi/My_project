@@ -52,6 +52,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private PlayerController playerCon;
 
+    [SerializeField]
+    private GameObject charge_Fire_Effect;
+
     //공격시작 딜레이
     [SerializeField]
     private float attackOnDelay;
@@ -97,6 +100,9 @@ public class EnemyController : MonoBehaviour
     private GunSensor gunSensor;
 
     [SerializeField]
+    private AudioClip stickSound;
+
+    [SerializeField]
     private float stopTime;
 
     public bool isPlayerInRange;
@@ -124,8 +130,6 @@ public class EnemyController : MonoBehaviour
         else if (isEnt)
         {
             Waypoint.AttackNAvSetting();
-            //StopAllCoroutines();
-            //EntGunAttacked();
         }
         if (hp <= 0)
         {
@@ -171,7 +175,7 @@ public class EnemyController : MonoBehaviour
         rifle.SetActive(false);
         anim.SetTrigger("StickAttack");
         Waypoint.AttackNAvSetting();
-
+        audioSource.PlayOneShot(stickSound);
         yield return new WaitForSeconds(attackOnDelay);
 
         playerCon.StickAttacked();
@@ -189,7 +193,7 @@ public class EnemyController : MonoBehaviour
     //적감지 시 
     public void BeforeSensorShot()
     {
-        if (!isPlayerInRange)
+        if (!isPlayerInRange && !isStickAttack)
         {
             StartCoroutine(ShotCoroutine());
         }
@@ -273,22 +277,27 @@ public class EnemyController : MonoBehaviour
         anim.speed = 1f;
     }
 
-    public void Dead()
+    public void EntDead()
     {
         isEnt = false;
-        //Waypoint.AttackNAvSetting();
-        anim.SetTrigger("Die");
         Destroy(this.gameObject, 0.1f);
     }
 
+    private void Dead()
+    {
+        Waypoint.AttackNAvSetting();
+        GameObject clone = Instantiate(charge_Fire_Effect, transform.position, Quaternion.identity);
+        Destroy(clone, 0.5f);
+        Destroy(this.gameObject, 0.1f);
+    }
 
     private int DecreaseHp(int _damage)
     {
         if (!isEnt)
         {
             hp -= _damage;
-            Debug.Log(hp);
         }
+
         return hp;
 
 
