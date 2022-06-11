@@ -20,9 +20,9 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody playerRigid;
 
-    private bool isWalk = false;
-    private bool isRun = false;
-    private bool isGround = true;
+    public bool isWalk = false;
+    public bool isRun = false;
+    public bool isGround = true;
 
     //움직임 체크
     private Vector3 lastPos;
@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
     private Status status;
 
     public bool isShock = false;
+
+    private bool isJump = false;
 
     private GameManager gameManager;
 
@@ -202,6 +204,7 @@ public class PlayerController : MonoBehaviour
             {
                 WeaponManager.currentWeaponAnim.SetBool("Run", isRun);
             }
+
             crosshair.RunAnimation(isRun);
 
         }
@@ -233,10 +236,16 @@ public class PlayerController : MonoBehaviour
     //점프
     private void Jump()
     {
-        if (Input.GetKey(KeyCode.Space) && isGround)
+        if (Input.GetKey(KeyCode.Space) && isGround && !isJump)
         {
             playerRigid.velocity = transform.up * jumpForce;
+            isWalk = false;
+            isJump = true;
+            
+            //status.DecreaseSp(20);
+
         }
+        isJump = false;
     }
 
     public void StickAttacked()

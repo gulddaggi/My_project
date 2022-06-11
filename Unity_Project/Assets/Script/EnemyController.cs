@@ -258,15 +258,18 @@ public class EnemyController : MonoBehaviour
     //엔트로피총피격
     public void EntGunAttacked()
     {
+        if (!isEnt)
+        {
             StartCoroutine(EntGunAttackedCoroutine());
+        }
     }
 
     //엔트로피총피격코루틴
     IEnumerator EntGunAttackedCoroutine()
     {
+        isEnt = true;
         yield return new WaitForSeconds(0.01f);
 
-        isEnt = true;
         Waypoint.AttackNAvSetting();
         anim.speed = 0f;
 

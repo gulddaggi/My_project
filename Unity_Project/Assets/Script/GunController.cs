@@ -70,6 +70,8 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private Text[] text_Bullet;
 
+    [SerializeField]
+    private PlayerController playerController;
 
 
     void Start()
@@ -157,6 +159,7 @@ public class GunController : MonoBehaviour
     public void Run(bool _bool)
     {
         gun.anim.SetBool("Run", _bool);
+        CancleAim();
     }
 
     public void Walk(bool _bool)
@@ -174,7 +177,7 @@ public class GunController : MonoBehaviour
     //재장전 조건
     private void BeforeReload()
     {
-        if (Input.GetKeyDown(KeyCode.R) && remainBullet < reloadBullet)
+        if (Input.GetKeyDown(KeyCode.R) && remainBullet < reloadBullet && !isReload)
         {
             CancleAim();
             StopAllCoroutines();
@@ -219,7 +222,7 @@ public class GunController : MonoBehaviour
     //정조준 조건
     private void BeforeAim()
     {
-        if (Input.GetButtonDown("Fire2") && !isReload)
+        if (Input.GetButtonDown("Fire2") && !isReload && !playerController.isRun)
         {
             Aim();
         }

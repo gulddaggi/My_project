@@ -58,6 +58,8 @@ public class EntGunController : MonoBehaviour
 
     private GameManager gameManager;
 
+    private PlayerController playerController;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -66,6 +68,7 @@ public class EntGunController : MonoBehaviour
         WeaponManager.currentWeaponTr = gun.GetComponent<Transform>();
         WeaponManager.currentWeaponAnim = gun.anim;
         gameManager = FindObjectOfType<GameManager>();
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     void Update()
@@ -104,15 +107,11 @@ public class EntGunController : MonoBehaviour
     //발사 가능여부 확인
     private void Fire()
     {
-            if (!isCharge)
-            {
-                UnChargeFire();
-            }
-            else
-            {
-                BeforeChargeFire();
-                Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, gun.range, layerMask);
-            }
+        if (!isCharge)
+        {
+            UnChargeFire();
+        }
+                                 
         Hit();
 
         crosshair.FireAnimation();
@@ -153,7 +152,7 @@ public class EntGunController : MonoBehaviour
     //충전발사(대상처치)상태
     private void BeforeChargeFire()
     {
-        if (hitInfo.transform.tag == "Enemy" || hitInfo.transform.tag == "Bomb")
+        if (hitInfo.transform.tag == "Enemy")
         {
             chargeGauge = 0;
             gun.anim.SetTrigger("Fire");
@@ -165,7 +164,7 @@ public class EntGunController : MonoBehaviour
     //정조준 조건
     private void BeforeAim()
     {
-        if (Input.GetButtonDown("Fire2") && !isCharge)
+        if (Input.GetButtonDown("Fire2") && !isCharge && !playerController.isRun)
         {
             Aim();
         }
@@ -190,13 +189,13 @@ public class EntGunController : MonoBehaviour
     {
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, gun.range, layerMask))
         {
-            if (hitInfo.transform.tag == "Enemy" || hitInfo.transform.tag == "Bomb")
+            if (hitInfo.transform.tag == "Enemy")
             {
                 if (!isCharge)
                 {
-                    hitInfo.transform.GetComponent<EnemyController>().EntGunAttacked();
                     if (!hitInfo.transform.GetComponent<EnemyController>().isEnt)
                     {
+                        hitInfo.transform.GetComponent<EnemyController>().EntGunAttacked();
                         ChargeCalc();
                         GameObject clone = Instantiate(uncharge_Fire_Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                         Destroy(clone, 1.5f);
@@ -204,7 +203,9 @@ public class EntGunController : MonoBehaviour
                 }
                 else if (isCharge)
                 {
-
+                    chargeGauge = 0;
+                    gun.anim.SetTrigger("Fire");
+                    audioSource.PlayOneShot(charge_Fire_Sound);
                     StartCoroutine(ReturnCoroutine());   
 
                 }
@@ -223,13 +224,6 @@ public class EntGunController : MonoBehaviour
         if (hitInfo.transform.tag == "Enemy")
         {
             hitInfo.transform.GetComponent<EnemyController>().EntDead();
-        }
-        else if (hitInfo.transform.tag == "Bomb")
-        {
-
-            hitInfo.transform.gameObject.SetActive(false);
-            status.DecreaseHP(100);
-            
         }
         yield return null;
         isCharge = false;

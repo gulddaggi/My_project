@@ -12518,6 +12518,10 @@ PrefabInstance:
       propertyPath: MinDistance
       value: 0.84923553
       objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player
       value: 
@@ -12856,6 +12860,7 @@ MonoBehaviour:
   - {fileID: 375644469}
   - {fileID: 1651419230}
   gameOver: {fileID: 433871376}
+  playerController: {fileID: 1007516759}
 --- !u!1 &442445116
 GameObject:
   m_ObjectHideFlags: 0
@@ -13661,6 +13666,10 @@ PrefabInstance:
     - target: {fileID: 86205544, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: m_Volume
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player
@@ -14495,6 +14504,10 @@ PrefabInstance:
     - target: {fileID: 86205544, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: m_Volume
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player
@@ -16680,6 +16693,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   runSpeed: 5
+  isRun: 0
+  isGround: 1
   jumpForce: 5
   rotationSpeed: 2
   rotationLimit: 45
@@ -18130,6 +18145,10 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player
       value: 
@@ -18420,6 +18439,10 @@ PrefabInstance:
     - target: {fileID: 86205544, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: m_Volume
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player
@@ -18840,6 +18863,7 @@ MonoBehaviour:
   text_Bullet:
   - {fileID: 380138192}
   - {fileID: 1519501316}
+  playerController: {fileID: 1007516759}
 --- !u!95 &1415202455 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5773617371592629550, guid: e800a8287f013b645862035bd87528e7, type: 3}
@@ -21309,6 +21333,10 @@ PrefabInstance:
     - target: {fileID: 86205544, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: m_Volume
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player
@@ -39720,6 +39748,10 @@ PrefabInstance:
     - target: {fileID: 86205544, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: m_Volume
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 413117211, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 895044463, guid: 56e7debf3e0c8c4488e8c20476991703, type: 3}
       propertyPath: player

@@ -51,6 +51,9 @@ public class Status : MonoBehaviour
     [SerializeField]
     private GameOver gameOver;
 
+    [SerializeField]
+    private PlayerController playerController;
+
 
 
     void Start()
@@ -107,7 +110,7 @@ public class Status : MonoBehaviour
 
     private void SPRechargeTime()
     {
-        if (isSpUsed)
+        if (isSpUsed && playerController.isGround)
         {
             if (currentRechargeTime < spRechargeTime)
             {
@@ -176,6 +179,7 @@ public class Status : MonoBehaviour
         if (currentEnt + _ent < max_Ent)
         {
             currentEnt += _ent;
+            Debug.Log(currentEnt);
         }
         else
         {
